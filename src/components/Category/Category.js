@@ -1,40 +1,37 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import Checkbox from "../Checkbox/Checkbox";
-import {selectCategories} from "./select";
-import {getFiltersCreators} from "../../redux/actionCreators/actionCreators";
-import {connect} from "react-redux";
 
+const Category = ({categories}) => {
 
-const Category = ({categories, getCategories, setFilters}) => {
-
-    useEffect(() => {
-        getCategories();
-    }, []);
-
-    const [selected, setSelected] = useState({});
-
-    if (!categories) {
-        return <p>load ...</p>
-    }
-
-    const handle = (e) => {
-        setSelected({...selected, [e.target.value]: e.target.checked})
-        setFilters({...selected, [e.target.value]: e.target.checked});
-    }
+    // console.log('in categories', categories);
+    // useEffect(() => {
+    //     getCategories();
+    // }, []);
+    //
+    // const [selected, setSelected] = useState({});
+    //
+    // if (!categories) {
+    //     return <p>load ...</p>
+    // }
+    //
+    // const handle = (e) => {
+    //     setSelected({...selected, [e.target.value]: e.target.checked})
+    //     setFilters({...selected, [e.target.value]: e.target.checked});
+    // }
 
 
     return (
         <div>
             {
-                categories.map(({name, id}) => {
+                categories.map((name, index) => {
                     return (
-                        <div key={id}>
+                        <div key={index}>
                             <Checkbox
                                 type="checkbox"
                                 name={name}
                                 value={name}
-                                checked={selected[name] ? selected[name] : false}
-                                onChange={handle}
+                                // checked={selected[name] ? selected[name] : false}
+                                // onChange={handle}
                             />
                         </div>
                     )
@@ -44,11 +41,11 @@ const Category = ({categories, getCategories, setFilters}) => {
     );
 }
 
-const mapStateToProps = (state) => ({
-    categories: selectCategories(state),
-})
-const mapDispatchToProps = (dispatch) => ({
-    getCategories: () => dispatch(getFiltersCreators()),
-})
+// const mapStateToProps = (state) => ({
+//     categories: selectCategories(state),
+// })
+// const mapDispatchToProps = (dispatch) => ({
+//     getCategories: () => dispatch(getFiltersCreators()),
+// })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Category);
+export default Category;

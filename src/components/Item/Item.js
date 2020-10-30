@@ -1,47 +1,35 @@
-import React, {useEffect} from 'react';
-import {getDrinksCreators} from "../../redux/actionCreators/actionCreators";
-import {connect} from "react-redux";
-import {selectDrinks} from './select';
+import React from 'react';
 
-const Item = ({name, selected, getDrinks, drinks}) => {
 
-    useEffect(() => {
-        getDrinks(name)
-    }, [])
+const Item = ({drink}) => {
 
-    if (!drinks) {
-        return <p>load ...</p>
-    }
-
-    console.log('drinks', drinks);
     return (
         <div>
-            {
-                selected ?
-                    <>
-                        <h1>{name}</h1>
-                        {
-                            drinks.map(item => {
-                                return (
-                                    <div key={item.idDrink}>
-                                        <span>name: {item.strDrink}</span>
-                                        <img src={item.strDrinkThumb} height={50} width={50} alt={item.strDrink}/>
-                                    </div>
-                                )
-                            })
-                        }
-                    </> : null
-            }
+            <h2 className="col-12">{drink.name}</h2>
+            <div className='row'>
+                {
+                    drink.data.map((item) => {
+                        return (
+                            <div key={item.idDrink} className='col-4'>
+                                <h6>
+                                    {item.strDrink}
+                                 </h6>
+                                <div>
+                                    <img src={item.strDrinkThumb}
+                                         alt={item.strDrink}
+                                         height={'40%'}
+                                         width={'40%'}
+                                    />
+                                </div>
+
+                            </div>
+
+                        )
+                    })
+                }
+            </div>
         </div>
 
     );
 }
-
-const mapStateToProps = (state) => ({
-    drinks: selectDrinks(state),
-})
-const mapDispatchToProps = (dispatch) => ({
-    getDrinks: (name) => dispatch(getDrinksCreators(name)),
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(Item);
+export default Item;

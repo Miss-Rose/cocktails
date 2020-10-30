@@ -1,28 +1,37 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Item from "../Item/Item";
+import {selectDrinks} from "../../selectors/select";
+import {addDrinksCreators} from "../../redux/actionCreators/actionCreators";
+import {connect} from "react-redux";
 
-const List = ({filters}) => {
+const List = ({filters, addDrink, drinks}) => {
+
+    useEffect(() => {
+        filters.map(name =>
+            addDrink(name)
+        )
+    }, [])
 
     return (
-        <div>
+        <div className='d-block'>
             {
-                Object.entries(filters).map(((value, index) => {
-                    let [name, isTrue] = value;
-                    const regex = new RegExp('/ ');
-                    if (!regex.test(name)) {
-                       name = name.replace(" ", "_");
-                    }
+                drinks.map((item, index) => {
                     return <Item
                         key={index}
-                        name={name}
-                        selected={isTrue}
+                        drink={item}
                     />
-                }))
+                })
 
             }
         </div>
 
     );
 }
+const mapStateToProps = (state) => ({
+    drinks: selectDrinks(state)
 
-export default List;
+})
+const mapDispatchToProps = (dispatch) => ({
+    addDrink: (name) => dispatch(addDrinksCreators(name)),
+})
+export default connect(mapStateToProps, mapDispatchToProps)(List);

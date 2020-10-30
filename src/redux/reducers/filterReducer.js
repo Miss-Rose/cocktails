@@ -6,7 +6,6 @@ import {
 
 const initialState = {
     categories: [],
-    category: {},
     loading: false,
     error: false
 }
