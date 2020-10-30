@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {getFiltersCreators} from "../redux/actionCreators/actionCreators";
 import {connect} from "react-redux";
 import {selectFiltersName} from "../selectors/select";
@@ -6,21 +6,25 @@ import List from "../components/List/List";
 import Category from "../components/Category/Category";
 
 
-function App({filters, getFilters}) {
+function App({categories, getCategories}) {
+
+    const [filters, setFilters] = useState([]);
 
     useEffect(() => {
-        getFilters()
+        getCategories()
     }, [])
 
-    if(!filters.length){
+    if(!categories.length){
         return <p>load ...</p>
     }
+
+    const handle = (allFilter) => setFilters(allFilter);
 
     return (
         <div className='container-fluid'>
             <div className='row'>
                 <div className='col-3'>
-                    <Category categories={filters} />
+                    <Category categories={categories} setFilters={handle}/>
                 </div>
                 <div className='col-9'>
                     <List filters={filters} />
@@ -30,10 +34,10 @@ function App({filters, getFilters}) {
     );
 }
 const mapStateToProps = (state) => ({
-    filters: selectFiltersName(state),
+    categories: selectFiltersName(state),
 })
 const mapDispatchToProps = (dispatch) => ({
-    getFilters: () => dispatch(getFiltersCreators()),
+    getCategories: () => dispatch(getFiltersCreators()),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)

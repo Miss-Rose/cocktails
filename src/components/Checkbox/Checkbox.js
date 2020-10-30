@@ -1,6 +1,5 @@
 import React from 'react';
 
-
 const Checkbox = ({type, value, checked, onChange, name}) => {
 
     return (

@@ -1,6 +1,5 @@
 import React from 'react';
 
-
 const Item = ({drink}) => {
 
     return (
@@ -10,7 +9,7 @@ const Item = ({drink}) => {
                 {
                     drink.data.map((item) => {
                         return (
-                            <div key={item.idDrink} className='col-4'>
+                            <div key={item.idDrink} className='col-2'>
                                 <h6>
                                     {item.strDrink}
                                  </h6>
@@ -23,13 +22,11 @@ const Item = ({drink}) => {
                                 </div>
 
                             </div>
-
                         )
                     })
                 }
             </div>
         </div>
-
     );
 }
 export default Item;

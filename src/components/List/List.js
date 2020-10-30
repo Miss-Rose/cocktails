@@ -1,16 +1,9 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import Item from "../Item/Item";
-import {selectDrinks} from "../../selectors/select";
-import {addDrinksCreators} from "../../redux/actionCreators/actionCreators";
+import {selectFilteredDrinks} from "../../selectors/select";
 import {connect} from "react-redux";
 
-const List = ({filters, addDrink, drinks}) => {
-
-    useEffect(() => {
-        filters.map(name =>
-            addDrink(name)
-        )
-    }, [])
+const List = ({drinks}) => {
 
     return (
         <div className='d-block'>
@@ -27,11 +20,10 @@ const List = ({filters, addDrink, drinks}) => {
 
     );
 }
-const mapStateToProps = (state) => ({
-    drinks: selectDrinks(state)
+const mapStateToProps = (state, filters) => ({
+    drinks: selectFilteredDrinks(state, filters)
+})
 
-})
-const mapDispatchToProps = (dispatch) => ({
-    addDrink: (name) => dispatch(addDrinksCreators(name)),
-})
-export default connect(mapStateToProps, mapDispatchToProps)(List);
+export default connect(mapStateToProps)(List);
+
+
